@@ -64,7 +64,6 @@ case class PreprocessedMessage(folderName: String, headers: Map[String, Seq[Stri
 @main def main: Unit = {
   val sessionProps = Properties()
   sessionProps.put("mail.imap.starttls.enable", "true")
-  sessionProps.put("mail.imap.starttls.required", "true")
   val ignoreFolders = sys.env.get("IGNORE_FOLDERS")
     .map(s => s.split(","))
     .getOrElse(Array.empty[String])
@@ -72,7 +71,8 @@ case class PreprocessedMessage(folderName: String, headers: Map[String, Seq[Stri
   
   val session = Session.getDefaultInstance(sessionProps)
   val mailStore = session.getStore("imap")
-  mailStore.connect(sys.env("IMAP_HOST"), 143, sys.env("IMAP_USERNAME"), sys.env("IMAP_PASSWORD"))
+  val port = Option(sys.env("IMAP_PORT")).flatMap(_.toIntOption).getOrElse(143)
+  mailStore.connect(sys.env("IMAP_HOST"), port, sys.env("IMAP_USERNAME"), sys.env("IMAP_PASSWORD"))
   val root = mailStore.getDefaultFolder()
   val stack = Stack[Folder](root.list(): _*)
   val messages = ArrayBuffer[PreprocessedMessage]()

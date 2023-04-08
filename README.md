@@ -1,8 +1,16 @@
-## sbt project compiled with Scala 3
+# IMAP Dedup
 
-### Usage
+It's a small Scala 3 program that connects to an IMAP server and scans it for duplicates emails.
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+Duplicates are detected using 2 details: the message content (md5 hash of it) and the date of the message.
+This is enough to detect accidental copies of emails, e.g. due to mistakes during migrations or similar.
 
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+## Usage
+
+The program is entirely configured using environment variables:
+
+* `IMAP_HOST`: The IMAP server to connect to
+* `IMAP_PORT`: The IMAP server port to connect to
+* `IMAP_USERNAME`: The username to login with
+* `IMAP_PASSWORD`: The password to login with
+* `IGNORE_FOLDERS`: An optional comma-separated list of folders (full names) to ignore
