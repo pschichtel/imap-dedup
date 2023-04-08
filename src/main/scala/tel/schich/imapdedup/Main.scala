@@ -71,10 +71,10 @@ case class PreprocessedMessage(folderName: String, headers: Map[String, Seq[Stri
   
   val session = Session.getDefaultInstance(sessionProps)
   val mailStore = session.getStore("imap")
-  val port = Option(sys.env("IMAP_PORT")).flatMap(_.toIntOption).getOrElse(143)
+  val port = sys.env.get("IMAP_PORT").flatMap(_.toIntOption).getOrElse(143)
   mailStore.connect(sys.env("IMAP_HOST"), port, sys.env("IMAP_USERNAME"), sys.env("IMAP_PASSWORD"))
-  val root = mailStore.getDefaultFolder()
-  val stack = Stack[Folder](root.list(): _*)
+
+  val stack = Stack[Folder](mailStore.getDefaultFolder().list():_*)
   val messages = ArrayBuffer[PreprocessedMessage]()
   val start = System.currentTimeMillis()
   while (!stack.isEmpty) {
