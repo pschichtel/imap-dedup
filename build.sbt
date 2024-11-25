@@ -7,7 +7,7 @@ lazy val root = project
     version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
     libraryDependencies ++= Seq(
-      "org.apache.commons" % "commons-email" % "1.5",
+      "org.apache.commons" % "commons-email" % "1.6.0",
       "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4",
       "org.scalameta" %% "munit" % "0.7.29" % Test
     )
