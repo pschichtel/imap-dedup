@@ -9,6 +9,6 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "org.apache.commons" % "commons-email" % "1.5",
       "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4",
-      "org.scalameta" %% "munit" % "0.7.29" % Test
+      "org.scalameta" %% "munit" % "1.0.3" % Test
     )
   )
